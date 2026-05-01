@@ -1,9 +1,13 @@
 resource "aws_eks_access_entry" "self" {
+  count = var.skip_self_access ? 0 : 1
+
   cluster_name  = data.aws_eks_cluster.this.name
   principal_arn = local.self_arn
 }
 
 resource "aws_eks_access_policy_association" "self_admin" {
+  count = var.skip_self_access ? 0 : 1
+
   cluster_name  = data.aws_eks_cluster.this.name
   principal_arn = local.self_arn
 
